@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../contexts/theme";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";

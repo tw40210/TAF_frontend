@@ -1,12 +1,4 @@
 import { tokens } from "../contexts/theme";
-import { initPropDict } from "./algoProps";
-
-export const initAlgo = {
-  id: "empty",
-  content: "Take out the garbage",
-  algoType: "Empty",
-  additional: initPropDict,
-};
 
 export const initAlgoStack = {
   id: "stack-*",

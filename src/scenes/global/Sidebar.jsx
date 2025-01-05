@@ -5,13 +5,8 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../contexts/theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import FolderIcon from "@mui/icons-material/Folder";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PivotTableChartIcon from "@mui/icons-material/PivotTableChart";
-import HorizontalSplitOutlinedIcon from "@mui/icons-material/HorizontalSplitOutlined";
 import { PageUrl } from "../../data/page_url";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -132,35 +127,6 @@ const Sidebar = () => {
               title="Price Data Table"
               to={PageUrl.PriceDataTable}
               icon={<FolderIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              BackTest
-            </Typography>
-            <Item
-              title="Backtests Panel"
-              to={PageUrl.BacktestPanel}
-              icon={<DashboardIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Strategies & Backtests"
-              to={PageUrl.StrategyBacktest}
-              icon={<PivotTableChartIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Algo stacks"
-              to={PageUrl.AlgoStacks}
-              icon={<HorizontalSplitOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
