@@ -130,6 +130,34 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            <Item
+              title="Tower of Myth"
+              to={PageUrl.TowerOfMyth}
+              icon={<FolderIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Enhancement"
+              to={PageUrl.Enhancement}
+              icon={<FolderIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Hero altar"
+              to={PageUrl.HeroAltar}
+              icon={<FolderIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Hero lobby"
+              to={PageUrl.HeroLobby}
+              icon={<FolderIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>

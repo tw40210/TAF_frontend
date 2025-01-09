@@ -2,7 +2,8 @@ export const PageUrl = {
   Root: "/",
   Dashboard: "/frontend",
   PriceDataTable: "/frontend/price_data_table",
-  BacktestPanel: "/frontend/backtest_panel",
-  AlgoStacks: "/frontend/algo_stacks",
-  StrategyBacktest: "/frontend/strategy_backtest",
+  TowerOfMyth: "/frontend/tower_of_myth",
+  Enhancement: "/frontend/enhancement",
+  HeroAltar: "/frontend/hero_altar",
+  HeroLobby: "/frontend/hero_lobby",
 };
