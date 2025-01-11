@@ -1,14 +1,37 @@
 import { tokens } from "../contexts/theme";
 import {AccountInfo} from "./object";
 
+export const initPartySets = {
+  set1: {
+    0: 'Option 1',
+    1: 'Option 2',
+    2: 'Option 3',
+    3: 'Option 4',
+    4: 'Option 5',
+    5: 'Option 6',
+  },
+  set2: {
+    0: 'Option 1',
+    1: 'Option 2',
+    2: 'Option 3',
+    3: 'Option 4',
+    4: 'Option 5',
+    5: 'Option 6',
+  },
+};
+
+
 export const initAccountInfo = new AccountInfo(
   -1, 
   "defaultAccount", 
   {towerOfmyth: {level: 0}}, 
   [], 
   [], 
-  {}
+  {},
+  structuredClone(initPartySets)
 )
+
+
 
 export const initialBacktestPrices = {
   "backtest-0": {
