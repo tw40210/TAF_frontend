@@ -6,10 +6,11 @@ import { PriceDataContext } from "../../contexts/price_data";
 import { initPartySets } from "../../data/initData";
 import { AccountInfoContext } from "../../contexts/account_info";
 import { heroIdMappingRev } from "../../data/hero_index";
+import { noObjectStr } from "../../data/constants";
 
 
 
-const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
+const options = [noObjectStr, 'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
 
 
 const HeroLobby = () => {
@@ -22,15 +23,10 @@ const HeroLobby = () => {
   }
 
   useEffect(() => {
-    // fetchMetaData(priceDataConext.setPriceMetaData);
   }, []);
 
   const [activeTab, setActiveTab] = useState(0);
-  // const [selectedCards, setSelectedCards] = useState(
-  //   structuredClone(accountInfoConext.accountInfo.party_sets.set1) //use info form in select
-  // );
   const set_key = setMap[activeTab]
-  const selectedCards = accountInfoConext.accountInfo.party_sets[set_key]
   const [editingCard, setEditingCard] = useState(null); // Tracks the currently clicked card for inline dropdown.
 
   const handleTabChange = (event, newValue) => {
@@ -52,12 +48,22 @@ const HeroLobby = () => {
     console.log("accountInfoConext.accountInfo", accountInfoConext.accountInfo)
     setTimeout(() => setEditingCard(null), 0); // Close the dropdown after selection. Defer the state change.
   };
-
-  console.log("selectedCards",selectedCards)
+  const handleImagePath = (card_name) => {
+    if(card_name===noObjectStr){
+      return "/assets/images/icons/main_icon.png"
+    }else{
+      return `/assets/images/heros/${heroIdMappingRev[card_name]}/full_body.png`
+    }
+  };
 
   const currentSet =Object.entries(accountInfoConext.accountInfo.party_sets[set_key]);
-  console.log("currentSet",currentSet)
+  const currentSetCopy = structuredClone(currentSet)
+  const selectedSet = new Set(currentSet.map(x => x[1]))
+
+  console.log("currentSet", currentSet)
   
+  console.log("selectedSet", selectedSet)
+
   return (
     <Box m="20px">
       <Header title="Hero Lobby" subtitle="Managing your current data" />
@@ -102,10 +108,14 @@ const HeroLobby = () => {
                       fullWidth
                       autoFocus
                     >
-                      {options.map((option, index) => (
-                        <MenuItem value={option} key={index}>
-                          {option}
-                        </MenuItem>
+                      {options.map((option, index) => (((!selectedSet.has(option))|| (option === card_name)) || option ===noObjectStr ? 
+                        (
+                          
+                          <MenuItem value={option} key={index}>
+                            {option}
+                          </MenuItem>
+                        ) : 
+                        null
                       ))}
                     </Select>
                   ) : (
@@ -114,7 +124,7 @@ const HeroLobby = () => {
                   <CardMedia
                     component="img"
                     height="768"
-                    image={`/assets/images/heros/${heroIdMappingRev[card_name]}/full_body.png`}
+                    image={handleImagePath(card_name)}
                     alt="Example Image"
                   />
                 </CardContent>
