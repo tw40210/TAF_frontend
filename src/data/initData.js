@@ -1,5 +1,5 @@
 import { tokens } from "../contexts/theme";
-import {AccountInfo} from "./object";
+import {AccountInfo, HeroCharacter} from "./object";
 
 export const initPartySets = {
   set1: {
@@ -22,13 +22,16 @@ export const initPartySets = {
 
 
 export const initAccountInfo = new AccountInfo(
-  -1, 
-  "defaultAccount", 
-  {towerOfmyth: {level: 0}}, 
-  [], 
-  [], 
-  {},
-  structuredClone(initPartySets)
+  -1, //id
+  "defaultAccount", //name
+  {towerOfmyth: {level: 0}}, //stories
+  {
+    'Option 2': new HeroCharacter(1, 'Option 2', 10),
+    'Option 4': new HeroCharacter(3, 'Option 4', 12)
+  }, //hero
+  {}, //items
+  {}, //status
+  structuredClone(initPartySets) //party_sets
 )
 
 

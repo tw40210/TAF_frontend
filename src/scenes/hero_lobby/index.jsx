@@ -7,6 +7,7 @@ import { initPartySets } from "../../data/initData";
 import { AccountInfoContext } from "../../contexts/account_info";
 import { heroIdMappingRev } from "../../data/hero_index";
 import { noObjectStr } from "../../data/constants";
+import { handleImagePath } from "../../heplers/image_helper";
 
 
 
@@ -48,21 +49,10 @@ const HeroLobby = () => {
     console.log("accountInfoConext.accountInfo", accountInfoConext.accountInfo)
     setTimeout(() => setEditingCard(null), 0); // Close the dropdown after selection. Defer the state change.
   };
-  const handleImagePath = (card_name) => {
-    if(card_name===noObjectStr){
-      return "/assets/images/icons/main_icon.png"
-    }else{
-      return `/assets/images/heros/${heroIdMappingRev[card_name]}/full_body.png`
-    }
-  };
 
   const currentSet =Object.entries(accountInfoConext.accountInfo.party_sets[set_key]);
   const currentSetCopy = structuredClone(currentSet)
   const selectedSet = new Set(currentSet.map(x => x[1]))
-
-  console.log("currentSet", currentSet)
-  
-  console.log("selectedSet", selectedSet)
 
   return (
     <Box m="20px">

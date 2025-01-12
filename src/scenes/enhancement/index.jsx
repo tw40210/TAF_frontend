@@ -1,132 +1,65 @@
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box,  Card, CardContent, CardMedia, Grid, Paper, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../contexts/theme";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import UpdateOutlinedIcon from "@mui/icons-material/UpdateOutlined";
 import Header from "../../components/Header";
-import { useContext, useEffect } from "react";
-import { PriceDataContext } from "../../contexts/price_data";
-import { fetchMetaData } from "../../actions/backend";
+import { useContext, useEffect, useState } from "react";
 import { AccountInfoContext } from "../../contexts/account_info";
+import { handleImagePath } from "../../heplers/image_helper";
 
 const Enhancement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const priceDataConext = useContext(PriceDataContext);
   const accountInfoConext = useContext(AccountInfoContext);
 
   useEffect(() => {
-    console.log("TOwer:", accountInfoConext.accountInfo.stories.towerOfmyth.level)
-    accountInfoConext.setAccountInfo({...accountInfoConext.accountInfo,
-      stories:{
-        ...accountInfoConext.accountInfo.stories,
-        towerOfmyth:{
-          ...accountInfoConext.accountInfo.stories.towerOfmyth,
-          level:5
-        }
-      }
-    })
+
   }, []);
 
-  console.log("TOwer:", accountInfoConext.accountInfo.stories.towerOfmyth.level)
-
-  const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "start_date",
-      headerName: "Start Date",
-      flex: 1,
-    },
-    {
-      field: "end_date",
-      headerName: "End Date",
-      flex: 1,
-    },
-    {
-      field: "type",
-      headerName: "Data Type",
-      flex: 1,
-      renderCell: ({ row: { type } }) => {
-        return (
-          <Box
-            width="100%"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Box
-              width="40%"
-              m="0 15px"
-              p="5px"
-              display="flex"
-              justifyContent="center"
-              backgroundColor={
-                type === "Stock"
-                  ? colors.greenAccent[600]
-                  : type === "Crypto"
-                  ? colors.greenAccent[700]
-                  : colors.greenAccent[700]
-              }
-              borderRadius="4px"
-            >
-              <Typography color={colors.grey[100]}>{type}</Typography>
-            </Box>
-            <IconButton type="button" sx={{ p: 1 }}>
-              <DeleteForeverOutlinedIcon />
-            </IconButton>
-            <IconButton type="button" sx={{ p: 1 }}>
-              <UpdateOutlinedIcon />
-            </IconButton>
-          </Box>
-        );
-      },
-    },
-  ];
+  const currentHeros =Object.entries(accountInfoConext.accountInfo.heros);
+  const [editingCard, setEditingCard] = useState(null); // Tracks the currently clicked card for inline dropdown.
+  console.log("currentHeros", currentHeros)
 
   return (
     <Box m="20px">
       <Header title="Enhancement" subtitle="Managing your current data" />
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
+      <Paper
+        elevation={3}
         sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
+          width: '100%',
+          padding: 3,
+          borderRadius: 2,
+          backgroundColor: colors.grey[800], // Light beige for a paper-like look
         }}
       >
-        <DataGrid
-          checkboxSelection
-          rows={priceDataConext.priceMetaData}
-          columns={columns}
-        />
-      </Box>
+        {/* Cards Display */}
+        <Grid container spacing={2} sx={{ marginTop: 2 }}>
+          {currentHeros.map(([card_name, {card_id, _, card_level}]) => (
+            <Grid item xs={12} sm={6} md={4} key={card_id}>
+              <Card
+                variant="outlined"
+                onClick={() => setEditingCard(card_id)}
+                sx={{ cursor: 'pointer' }}
+              >
+                <CardContent>
+                  <Typography variant="h6" gutterBottom>
+                    {card_name}
+                  </Typography>
+                  {editingCard === card_id ? (
+                    <Typography>Selected</Typography>
+                  ) : (
+                    <Typography>UnSelected</Typography>
+                  )}
+                  <CardMedia
+                    component="img"
+                    height="768"
+                    image={handleImagePath(card_name)}
+                    alt="Example Image"
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
     </Box>
   );
 };
