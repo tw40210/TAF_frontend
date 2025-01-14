@@ -1,9 +1,29 @@
-import { Box,  Card, CardContent, CardMedia, Grid, Paper, Typography, useTheme } from "@mui/material";
+import { Box,  Card, CardContent, CardMedia, Grid, Paper, Dialog, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useContext, useEffect, useState } from "react";
 import { AccountInfoContext } from "../../contexts/account_info";
 import { handleImagePath } from "../../heplers/image_helper";
+import PaperTabs from "../../components/HeroEnhancementPanel";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const Enhancement = () => {
   const theme = useTheme();
@@ -14,9 +34,27 @@ const Enhancement = () => {
 
   }, []);
 
+  const [open, setOpen] = useState(false);
+
+
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleCardClick = (id) => () => {
+    setOpen(true);
+    setEditingCard(id)
+  };
+
   const currentHeros =Object.entries(accountInfoConext.accountInfo.heros);
   const [editingCard, setEditingCard] = useState(null); // Tracks the currently clicked card for inline dropdown.
   console.log("currentHeros", currentHeros)
+  console.log("editingCard", editingCard)
 
   return (
     <Box m="20px">
@@ -32,19 +70,19 @@ const Enhancement = () => {
       >
         {/* Cards Display */}
         <Grid container spacing={2} sx={{ marginTop: 2 }}>
-          {currentHeros.map(([card_name, {card_id, _, card_level}]) => (
-            <Grid item xs={12} sm={6} md={4} key={card_id}>
+          {currentHeros.map(([card_name, heroChar]) => (
+            <Grid item xs={12} sm={6} md={4} key={heroChar.id}>
               <Card
                 variant="outlined"
-                onClick={() => setEditingCard(card_id)}
+                onClick={handleCardClick(heroChar.id)}
                 sx={{ cursor: 'pointer' }}
               >
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     {card_name}
                   </Typography>
-                  {editingCard === card_id ? (
-                    <Typography>Selected</Typography>
+                  {editingCard === heroChar.id ? (
+                    <Typography>{heroChar.id}</Typography>
                   ) : (
                     <Typography>UnSelected</Typography>
                   )}
@@ -59,6 +97,10 @@ const Enhancement = () => {
             </Grid>
           ))}
         </Grid>
+              {/* Popup Paper */}
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+          <PaperTabs/>
+        </Dialog>
       </Paper>
     </Box>
   );
