@@ -4,7 +4,8 @@ import Header from "../../components/Header";
 import { useContext, useEffect, useState } from "react";
 import { AccountInfoContext } from "../../contexts/account_info";
 import { handleImagePath } from "../../heplers/image_helper";
-import PaperTabs from "../../components/HeroEnhancementPanel";
+import PaperTabs from "../../components/enhancement/HeroEnhancementPanel";
+import { heroIdMapping } from "../../data/hero_index";
 
 
 
@@ -37,24 +38,19 @@ const Enhancement = () => {
   const [open, setOpen] = useState(false);
 
 
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleCardClick = (id) => () => {
-    setOpen(true);
     setEditingCard(id)
+    setTimeout(() => setOpen(true), 0);
+    
   };
 
-  const currentHeros =Object.entries(accountInfoConext.accountInfo.heros);
+  const currentHeros =Object.keys(accountInfoConext.accountInfo.heros);
   const [editingCard, setEditingCard] = useState(null); // Tracks the currently clicked card for inline dropdown.
-  console.log("currentHeros", currentHeros)
-  console.log("editingCard", editingCard)
+  console.log("accountInfoConext.accountInfo.heros", accountInfoConext.accountInfo.heros)
 
   return (
     <Box m="20px">
@@ -70,27 +66,27 @@ const Enhancement = () => {
       >
         {/* Cards Display */}
         <Grid container spacing={2} sx={{ marginTop: 2 }}>
-          {currentHeros.map(([card_name, heroChar]) => (
-            <Grid item xs={12} sm={6} md={4} key={heroChar.id}>
+          {currentHeros.map((card_name) => (
+            <Grid item xs={12} sm={6} md={4} key={accountInfoConext.accountInfo.heros[card_name].id}>
               <Card
                 variant="outlined"
-                onClick={handleCardClick(heroChar.id)}
+                onClick={handleCardClick(accountInfoConext.accountInfo.heros[card_name].id)}
                 sx={{ cursor: 'pointer' }}
               >
                 <CardContent>
                   <Typography variant="h6" gutterBottom>
                     {card_name}
                   </Typography>
-                  {editingCard === heroChar.id ? (
-                    <Typography>{heroChar.id}</Typography>
+                  {editingCard === accountInfoConext.accountInfo.heros[card_name].id ? (
+                    <Typography>{accountInfoConext.accountInfo.heros[card_name].id}</Typography>
                   ) : (
                     <Typography>UnSelected</Typography>
                   )}
                   <CardMedia
                     component="img"
-                    height="768"
                     image={handleImagePath(card_name)}
                     alt="Example Image"
+                    style={{ width: '100%' }} 
                   />
                 </CardContent>
               </Card>
@@ -99,7 +95,7 @@ const Enhancement = () => {
         </Grid>
               {/* Popup Paper */}
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-          <PaperTabs/>
+          <PaperTabs heroCharacter={accountInfoConext.accountInfo.heros[heroIdMapping[editingCard]]}/>
         </Dialog>
       </Paper>
     </Box>

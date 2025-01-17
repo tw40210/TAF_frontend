@@ -2,10 +2,7 @@ import { Box, Tabs, Tab, Card, CardContent, CardMedia, Grid, Paper, Typography, 
 import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useContext, useEffect, useState } from "react";
-import { PriceDataContext } from "../../contexts/price_data";
-import { initPartySets } from "../../data/initData";
 import { AccountInfoContext } from "../../contexts/account_info";
-import { heroIdMappingRev } from "../../data/hero_index";
 import { noObjectStr } from "../../data/constants";
 import { handleImagePath } from "../../heplers/image_helper";
 
@@ -51,7 +48,6 @@ const HeroLobby = () => {
   };
 
   const currentSet =Object.entries(accountInfoConext.accountInfo.party_sets[set_key]);
-  const currentSetCopy = structuredClone(currentSet)
   const selectedSet = new Set(currentSet.map(x => x[1]))
 
   return (
@@ -113,9 +109,9 @@ const HeroLobby = () => {
                   )}
                   <CardMedia
                     component="img"
-                    height="768"
                     image={handleImagePath(card_name)}
                     alt="Example Image"
+                    style={{ width: '100%' }} 
                   />
                 </CardContent>
               </Card>
