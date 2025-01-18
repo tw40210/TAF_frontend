@@ -1,5 +1,5 @@
 import { tokens } from "../contexts/theme";
-import {AccountInfo, HeroCharacter} from "./object";
+import {AccountInfo, HeroCharacter, HeroTrait} from "./object";
 
 export const initPartySets = {
   set1: {
@@ -20,19 +20,33 @@ export const initPartySets = {
   },
 };
 
+export const initHeroTraits = {
+  trait_0:new HeroTrait({trait_id:0, trait_level:1}),
+  trait_1:new HeroTrait({trait_id:1, trait_level:7}),
+  trait_2:new HeroTrait({trait_id:2, trait_level:8}),
+  trait_3:new HeroTrait({trait_id:0, trait_level:1}),
+  trait_4:new HeroTrait({trait_id:0, trait_level:1}),
+  trait_5:new HeroTrait({trait_id:0, trait_level:1}),
+}
 
-export const initAccountInfo = new AccountInfo(
-  -1, //id
-  "defaultAccount", //name
-  {towerOfmyth: {level: 0}}, //stories
-  {
-    'Option 2': new HeroCharacter(1, 'Option 2', 10),
-    'Option 4': new HeroCharacter(3, 'Option 4', 12)
-  }, //hero
-  {}, //items
-  {}, //status
-  structuredClone(initPartySets) //party_sets
+
+
+export const initAccountInfo = new AccountInfo({
+  id:-1, 
+  name:"defaultAccount",
+  stories:{towerOfmyth: {level: 0}}, 
+  heros:{
+    'Option 2': new HeroCharacter({id:1, name:'Option 2', level:10, heroTraits:structuredClone(initHeroTraits)}),
+    'Option 4': new HeroCharacter({id:3, name:'Option 4', level:12, heroTraits:structuredClone(initHeroTraits)})
+  }, 
+  items:{}, 
+  status:{}, 
+  party_sets:structuredClone(initPartySets) 
+}
+
 )
+
+
 
 
 
