@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import {Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton, Drawer, Button} from '@mui/material';
+import {MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton, Drawer, Button} from '@mui/material';
 import { handleImagePath } from '../../heplers/image_helper';
+import { traitIdMapping } from '../../data/trait_index';
+import { itemIdMapping } from '../../data/item_index';
 
 const MainCharPanel = ({heroCharacter, value, index }) => {
   return (
@@ -41,19 +43,65 @@ const MainCharPanel = ({heroCharacter, value, index }) => {
 }
 
 const EnhancementPanel = ({heroCharacter, value, index }) => {
-  const listsData = [
-    ["Item 1A", "Item 2A", "Item 3A"],
-    ["Item 1B", "Item 2B", "Item 3B"],
-    ["Item 1C", "Item 2C", "Item 3C"],
-    ["Item 1D", "Item 2D", "Item 3D"],
-    ["Item 1E", "Item 2E", "Item 3E"],
-    ["Item 1F", "Item 2F", "Item 3F"],
-  ];
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [drawerContent, setDrawerContent] = useState("");
+  // const listsData = [
+  //   ["Item 1A", "Item 2A", "Item 3A"],
+  //   ["Item 1B", "Item 2B", "Item 3B"],
+  //   ["Item 1C", "Item 2C", "Item 3C"],
+  //   ["Item 1D", "Item 2D", "Item 3D"],
+  //   ["Item 1E", "Item 2E", "Item 3E"],
+  //   ["Item 1F", "Item 2F", "Item 3F"],
+  // ];
+  const currentHeroCharacterSetsKeys= Object.keys(heroCharacter.heroTraitSets)
 
-  const handleListItemClick = (item) => {
-    setDrawerContent(item); // Set the content for the side window
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerSetKey, setDrawerSetKey] = useState("");
+  const [drawerTraitKey, setDrawerTraitKey] = useState("");
+  const [drawerItemId, setDrawerItemId] = useState(-1);
+
+  const handleDrawerContent = ()=>{
+    const handleSelectChange = (event) =>{
+      setDrawerItemId(event.target.value)
+    }
+
+    if(drawerSetKey!=="" && drawerTraitKey!==""){
+      return (<Box>
+                <Typography variant="h6" gutterBottom>
+                Item Details \n
+                name: {traitIdMapping[heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_id].name} \n
+                level: {heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_level} \n
+                using item : {drawerItemId}
+                </Typography>
+                <Select
+                  value={""}
+                  onChange={handleSelectChange}
+                  fullWidth
+                  autoFocus
+                >
+                  {Object.keys(heroCharacter.itemSet).map((itemId, index) => ( 
+                    <MenuItem value={itemId} key={index}>
+                      {itemIdMapping[itemId].name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Box>
+
+        
+      )
+    }else{
+      return (
+        <Box>
+          <Typography variant="h6" gutterBottom>
+          No item selected
+          </Typography>
+        </Box>
+
+      )
+    }
+  }
+
+  const handleListItemClick = (setKey, traitKey) => {
+    setDrawerSetKey(setKey)
+    setDrawerTraitKey(traitKey)
     setDrawerOpen(true); // Open the side window
   };
   return (
@@ -66,18 +114,18 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
               >
             <CardContent>
               <Grid container spacing={4}>
-                {listsData.map((list, index) => (
+                {currentHeroCharacterSetsKeys.map((setKey, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
                     <Typography variant="h6" align="center">
-                      List {index + 1}
+                      {setKey} {index + 1}
                     </Typography>
                     <List>
-                      {list.map((item, itemIndex) => (
+                      {Object.keys(heroCharacter.heroTraitSets[setKey]).map((traitKey, itemIndex) => (
                         <ListItemButton
                             key={itemIndex}
-                            onClick={() => handleListItemClick(item)}
+                            onClick={() => handleListItemClick(setKey, traitKey)}
                         >
-                          <ListItemText primary={item} />
+                          <ListItemText primary={traitIdMapping[heroCharacter.heroTraitSets[setKey][traitKey].trait_id].name} />
                         </ListItemButton>
                       ))}
                     </List>
@@ -92,11 +140,8 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
                   sx: { width: 300, padding: 2 },
                 }}
               >
-                <Typography variant="h6" gutterBottom>
-                  Item Details
-                </Typography>
-                <Typography variant="body1">{drawerContent}</Typography>
-
+                {handleDrawerContent()}
+                
               </Drawer>
             </CardContent>
           </Card>

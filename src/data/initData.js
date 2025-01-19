@@ -1,7 +1,7 @@
 import { tokens } from "../contexts/theme";
-import {AccountInfo, HeroCharacter, HeroTrait} from "./object";
+import {AccountInfo, HeroCharacter, HeroTrait, HeroTraitSet, Item} from "./object";
 
-export const initPartySets = {
+const initPartySets = {
   set1: {
     0: 'Option 1',
     1: 'Option 2',
@@ -20,15 +20,28 @@ export const initPartySets = {
   },
 };
 
-export const initHeroTraits = {
+const initHeroTraitSet = new HeroTraitSet({
   trait_0:new HeroTrait({trait_id:0, trait_level:1}),
   trait_1:new HeroTrait({trait_id:1, trait_level:7}),
   trait_2:new HeroTrait({trait_id:2, trait_level:8}),
   trait_3:new HeroTrait({trait_id:0, trait_level:1}),
   trait_4:new HeroTrait({trait_id:0, trait_level:1}),
-  trait_5:new HeroTrait({trait_id:0, trait_level:1}),
+})
+
+const initHeroTraitSets = {
+  traitSet_0: structuredClone(initHeroTraitSet),
+  traitSet_1: structuredClone(initHeroTraitSet),
+  traitSet_2: structuredClone(initHeroTraitSet),
+  traitSet_3: structuredClone(initHeroTraitSet),
+  traitSet_4: structuredClone(initHeroTraitSet),
+  traitSet_5: structuredClone(initHeroTraitSet),
 }
 
+const initItemSet = {
+  0: structuredClone(new Item({id: 0, amount:5} )),
+  1: structuredClone(new Item({id: 1, amount:3} )),
+  2: structuredClone(new Item({id: 2, amount:4} )),
+}
 
 
 export const initAccountInfo = new AccountInfo({
@@ -36,8 +49,8 @@ export const initAccountInfo = new AccountInfo({
   name:"defaultAccount",
   stories:{towerOfmyth: {level: 0}}, 
   heros:{
-    'Option 2': new HeroCharacter({id:1, name:'Option 2', level:10, heroTraits:structuredClone(initHeroTraits)}),
-    'Option 4': new HeroCharacter({id:3, name:'Option 4', level:12, heroTraits:structuredClone(initHeroTraits)})
+    'Option 2': new HeroCharacter({id:1, name:'Option 2', level:10, heroTraitSets:structuredClone(initHeroTraitSets), itemSet: structuredClone(initItemSet)}),
+    'Option 4': new HeroCharacter({id:3, name:'Option 4', level:12, heroTraitSets:structuredClone(initHeroTraitSets), itemSet: structuredClone(initItemSet)})
   }, 
   items:{}, 
   status:{}, 
