@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import {MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton, Drawer, Button} from '@mui/material';
+import {useTheme, MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton, Drawer, Button} from '@mui/material';
 import { handleImagePath } from '../../heplers/image_helper';
 import { traitIdMapping } from '../../data/trait_index';
 import { itemIdMapping } from '../../data/item_index';
+import { tokens } from "../../contexts/theme";
 
 const MainCharPanel = ({heroCharacter, value, index }) => {
   return (
@@ -52,30 +53,40 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
   //   ["Item 1F", "Item 2F", "Item 3F"],
   // ];
   const currentHeroCharacterSetsKeys= Object.keys(heroCharacter.heroTraitSets)
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerSetKey, setDrawerSetKey] = useState("");
   const [drawerTraitKey, setDrawerTraitKey] = useState("");
-  const [drawerItemId, setDrawerItemId] = useState(-1);
+  const [drawerItemId, setDrawerItemId] = useState(Object.keys(heroCharacter.itemSet)[0] ?? -1);
+  const handleSelectChange = (event) =>{
+    setDrawerItemId(event.target.value)
+  }
+  console.log("drawerItemId", drawerItemId)
+  
 
   const handleDrawerContent = ()=>{
-    const handleSelectChange = (event) =>{
-      setDrawerItemId(event.target.value)
-    }
 
     if(drawerSetKey!=="" && drawerTraitKey!==""){
       return (<Box>
                 <Typography variant="h6" gutterBottom>
-                Item Details \n
-                name: {traitIdMapping[heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_id].name} \n
-                level: {heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_level} \n
+                Item Details <br />
+                name: {traitIdMapping[heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_id].name} <br />
+                level: {heroCharacter.heroTraitSets[drawerSetKey][drawerTraitKey].trait_level} <br />
                 using item : {drawerItemId}
                 </Typography>
                 <Select
-                  value={""}
+                  value={drawerItemId}
                   onChange={handleSelectChange}
                   fullWidth
                   autoFocus
+                  sx={{
+                    color: colors.primary[100], // Text color of the selected value
+                    ".MuiSelect-icon": {
+                      color: colors.primary[100], // Color of the dropdown arrow
+                    }
+                  }}
                 >
                   {Object.keys(heroCharacter.itemSet).map((itemId, index) => ( 
                     <MenuItem value={itemId} key={index}>
@@ -112,7 +123,7 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
           <Card
                 variant="outlined"
               >
-            <CardContent>
+            <CardContent sx={{ display: "flex", height: "100%" }}>
               <Grid container spacing={4}>
                 {currentHeroCharacterSetsKeys.map((setKey, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
@@ -133,16 +144,15 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
                 ))}
               </Grid>
               {/* Side Drawer */}
-              <Drawer
-                anchor="right"
-                open={drawerOpen}
-                PaperProps={{
-                  sx: { width: 300, padding: 2 },
+              <Box
+                sx={{
+                  width: 300,
+                  borderLeft: "1px solid #ddd",
+                  padding: 2
                 }}
               >
                 {handleDrawerContent()}
-                
-              </Drawer>
+              </Box>
             </CardContent>
           </Card>
               
