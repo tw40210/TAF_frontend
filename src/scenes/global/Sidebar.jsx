@@ -124,13 +124,6 @@ const Sidebar = () => {
               Data
             </Typography>
             <Item
-              title="Price Data Table"
-              to={PageUrl.PriceDataTable}
-              icon={<FolderIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
               title="Tower of Myth"
               to={PageUrl.TowerOfMyth}
               icon={<FolderIcon />}
