@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useTheme, MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton, Drawer, Button} from '@mui/material';
+import {useTheme, MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton} from '@mui/material';
 import { handleImagePath } from '../../heplers/image_helper';
 import { traitIdMapping } from '../../data/trait_index';
 import { itemIdMapping } from '../../data/item_index';
