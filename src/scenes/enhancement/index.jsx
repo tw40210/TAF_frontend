@@ -3,9 +3,10 @@ import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useContext, useEffect, useState } from "react";
 import { AccountInfoContext } from "../../contexts/account_info";
-import { handleImagePath } from "../../heplers/image_helper";
-import PaperTabs from "../../components/enhancement/HeroEnhancementPanel";
+import { handleHeroImagePath } from "../../heplers/image_helper";
+import EnhancementHeroPopup from "../../components/enhancement/HeroEnhancementPanel";
 import { heroIdMapping } from "../../data/hero_index";
+import FramedImage from "../../components/FramedImage";
 
 
 
@@ -61,7 +62,7 @@ const Enhancement = () => {
           width: '100%',
           padding: 3,
           borderRadius: 2,
-          backgroundColor: colors.grey[800], // Light beige for a paper-like look
+          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
         }}
       >
         {/* Cards Display */}
@@ -71,31 +72,18 @@ const Enhancement = () => {
               <Card
                 variant="outlined"
                 onClick={handleCardClick(accountInfoConext.accountInfo.heros[card_name].id)}
-                sx={{ cursor: 'pointer' }}
+                sx={{ 
+                  cursor: 'pointer',
+                  backgroundColor: 'transparent', }}
               >
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    {card_name}
-                  </Typography>
-                  {editingCard === accountInfoConext.accountInfo.heros[card_name].id ? (
-                    <Typography>{accountInfoConext.accountInfo.heros[card_name].id}</Typography>
-                  ) : (
-                    <Typography>UnSelected</Typography>
-                  )}
-                  <CardMedia
-                    component="img"
-                    image={handleImagePath(card_name)}
-                    alt="Example Image"
-                    style={{ width: '100%' }} 
-                  />
-                </CardContent>
+                <FramedImage imagePath={handleHeroImagePath(card_name)}  />
               </Card>
             </Grid>
           ))}
         </Grid>
               {/* Popup Paper */}
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
-          <PaperTabs heroCharacter={accountInfoConext.accountInfo.heros[heroIdMapping[editingCard]]}/>
+          <EnhancementHeroPopup heroCharacter={accountInfoConext.accountInfo.heros[heroIdMapping[editingCard]]}/>
         </Dialog>
       </Paper>
     </Box>

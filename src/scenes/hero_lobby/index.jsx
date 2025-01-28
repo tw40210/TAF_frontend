@@ -1,15 +1,15 @@
-import { Box, Tabs, Tab, Card, CardContent, CardMedia, Grid, Paper, Typography, Select, MenuItem, useTheme } from "@mui/material";
+import { Box, Tabs, Tab, Card, CardContent, Grid, Paper, Typography, Select, MenuItem, useTheme } from "@mui/material";
 import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useContext, useEffect, useState } from "react";
 import { AccountInfoContext } from "../../contexts/account_info";
 import { noObjectStr } from "../../data/constants";
-import { handleImagePath } from "../../heplers/image_helper";
+import { handleHeroImagePath } from "../../heplers/image_helper";
+import FramedImage from "../../components/FramedImage";
 
 
 
 const options = [noObjectStr, 'Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
-
 
 const HeroLobby = () => {
   const theme = useTheme();
@@ -59,7 +59,7 @@ const HeroLobby = () => {
           width: '100%',
           padding: 3,
           borderRadius: 2,
-          backgroundColor: colors.grey[800], // Light beige for a paper-like look
+          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
         }}
       >
         {/* Tabs for Switching Card Sets */}
@@ -67,8 +67,11 @@ const HeroLobby = () => {
           value={activeTab}
           onChange={handleTabChange}
           centered
-          textColor="secondary"
-          indicatorColor="secondary"
+          sx={{
+            '& .MuiTab-root': { color: colors.grey[400] }, // Default color for tabs
+            '& .Mui-selected': { color: colors.greenAccent[400] }, // Color for the selected tab
+            '& .MuiTabs-indicator': { backgroundColor: colors.greenAccent[400] }, // Indicator color
+          }}
         >
           <Tab label="Set 1" />
           <Tab label="Set 2" />
@@ -79,41 +82,35 @@ const HeroLobby = () => {
           {currentSet.map(([card_id, card_name]) => (
             <Grid item xs={12} sm={6} md={4} key={card_id}>
               <Card
-                variant="outlined"
+                // variant="outlined"
                 onClick={() => setEditingCard(card_id)}
-                sx={{ cursor: 'pointer' }}
+                sx={{ 
+                  cursor: 'pointer',
+                  backgroundColor: 'transparent', }}
               >
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    {card_name}
-                  </Typography>
-                  {editingCard === card_id ? (
-                    <Select
-                      value={card_name}
-                      onChange={(event) => handleSelectChange(card_id, event.target.value)}
-                      fullWidth
-                      autoFocus
-                    >
-                      {options.map((option, index) => (((!selectedSet.has(option))|| (option === card_name)) || option ===noObjectStr ? 
-                        (
-                          
-                          <MenuItem value={option} key={index}>
-                            {option}
-                          </MenuItem>
-                        ) : 
-                        null
-                      ))}
-                    </Select>
-                  ) : (
-                    <Typography />
-                  )}
-                  <CardMedia
-                    component="img"
-                    image={handleImagePath(card_name)}
-                    alt="Example Image"
-                    style={{ width: '100%' }} 
-                  />
-                </CardContent>
+                <FramedImage imagePath={handleHeroImagePath(card_name)}  />
+                {editingCard === card_id ? (
+                  <Select
+                    value={card_name}
+                    onChange={(event) => handleSelectChange(card_id, event.target.value)}
+                    fullWidth
+                    autoFocus
+                  >
+                    {options.map((option, index) => (((!selectedSet.has(option))|| (option === card_name)) || option ===noObjectStr ? 
+                      (
+                        
+                        <MenuItem value={option} key={index}>
+                          {option}
+                        </MenuItem>
+                      ) : 
+                      null
+                    ))}
+                  </Select>
+                ) : (
+                  <Typography />
+                )}
+                  
+
               </Card>
             </Grid>
           ))}

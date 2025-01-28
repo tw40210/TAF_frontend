@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useTheme, MenuItem, Select, Box, Paper, Tabs, Tab, Typography, Card, CardContent, CardMedia, List, ListItem, ListItemText, Grid, ListItemButton} from '@mui/material';
-import { handleImagePath } from '../../heplers/image_helper';
+import { handleHeroImagePath } from '../../heplers/image_helper';
 import { traitIdMapping } from '../../data/trait_index';
 import { itemIdMapping } from '../../data/item_index';
 import { tokens } from "../../contexts/theme";
@@ -19,7 +19,7 @@ const MainCharPanel = ({heroCharacter, value, index }) => {
             sx={{ display: 'flex', flexDirection: 'row'}}>
               <CardMedia
                       component="img"                    
-                      image={handleImagePath(heroCharacter.name)}
+                      image={handleHeroImagePath(heroCharacter.name)}
                       alt="Example Image"
                       style={{ width: '25%' }} 
                     /> 
@@ -174,7 +174,7 @@ const DisplayPanel = ({heroCharacter, value, index }) => {
             <CardContent>
               <CardMedia
                       component="img"                    
-                      image={handleImagePath(heroCharacter.name)}
+                      image={handleHeroImagePath(heroCharacter.name)}
                       alt="Example Image"
                       style={{ width: '25%' }} 
                     />
@@ -187,8 +187,10 @@ const DisplayPanel = ({heroCharacter, value, index }) => {
   );
 }
 
-const PaperTabs = ({ heroCharacter }) => {
+const EnhancementHeroPopup = ({ heroCharacter }) => {
   const [currentTab, setCurrentTab] = useState(0);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -196,7 +198,12 @@ const PaperTabs = ({ heroCharacter }) => {
 
   return (
     <Paper elevation={3} sx={{ width: '100%', margin: '5px auto', padding: 2 }}>
-      <Tabs value={currentTab} onChange={handleTabChange} aria-label="example tabs">
+      <Tabs value={currentTab} onChange={handleTabChange} aria-label="example tabs" 
+      sx={{
+        '& .MuiTab-root': { color: colors.grey[400] }, // Default color for tabs
+        '& .Mui-selected': { color: colors.greenAccent[400] }, // Color for the selected tab
+        '& .MuiTabs-indicator': { backgroundColor: colors.greenAccent[400] }, // Indicator color
+      }}>
         <Tab label="Tab One" id="tab-0" aria-controls="tabpanel-0" />
         <Tab label="Tab Two" id="tab-1" aria-controls="tabpanel-1" />
         <Tab label="Tab Three" id="tab-2" aria-controls="tabpanel-2" />
@@ -209,4 +216,4 @@ const PaperTabs = ({ heroCharacter }) => {
   );
 }
 
-export default PaperTabs
+export default EnhancementHeroPopup

@@ -2,7 +2,7 @@ import { Box, Paper, Select, MenuItem, Button, CardMedia, TextField, Typography,
 import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
-import { handleImagePath } from "../../heplers/image_helper";
+import { handleHeroImagePath } from "../../heplers/image_helper";
 
 const HeroAltar = () => {
   const theme = useTheme();
@@ -30,7 +30,7 @@ const HeroAltar = () => {
           width: '100%',
           padding: 3,
           borderRadius: 2,
-          backgroundColor: colors.grey[800], // Light beige for a paper-like look
+          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
         }}
       >
         {/* Cards Display */}
@@ -53,7 +53,7 @@ const HeroAltar = () => {
             {/* Image */}
             <CardMedia
                     component="img"
-                    image={handleImagePath("Option 3")}
+                    image={handleHeroImagePath("Option 3")}
                     alt="Example Image"
                     style={{ width: '100%' }} 
                   />
