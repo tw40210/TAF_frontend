@@ -3,6 +3,7 @@ import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
 import { handleHeroImagePath } from "../../heplers/image_helper";
+import BackgroundPaper from "../../components/BackgroundPaper";
 
 const TowerOfMyth = () => {
   const theme = useTheme();
@@ -24,15 +25,8 @@ const TowerOfMyth = () => {
   return (
     <Box m="20px">
       <Header title="Tower Of Myth" subtitle="Managing your current data" />
-      <Paper
-        elevation={3}
-        sx={{
-          width: '100%',
-          padding: 3,
-          borderRadius: 2,
-          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
-        }}
-      >
+
+      <BackgroundPaper>
         {/* Cards Display */}
         <Box
           sx={{
@@ -94,7 +88,7 @@ const TowerOfMyth = () => {
             />
           </Box>
         </Box>
-      </Paper>
+      </BackgroundPaper>
     </Box>
   );
 };

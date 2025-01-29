@@ -7,24 +7,7 @@ import { handleHeroImagePath } from "../../heplers/image_helper";
 import EnhancementHeroPopup from "../../components/enhancement/HeroEnhancementPanel";
 import { heroIdMapping } from "../../data/hero_index";
 import FramedImage from "../../components/FramedImage";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import BackgroundPaper from "../../components/BackgroundPaper";
 
 
 const Enhancement = () => {
@@ -56,15 +39,7 @@ const Enhancement = () => {
   return (
     <Box m="20px">
       <Header title="Enhancement" subtitle="Managing your current data" />
-      <Paper
-        elevation={3}
-        sx={{
-          width: '100%',
-          padding: 3,
-          borderRadius: 2,
-          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
-        }}
-      >
+      <BackgroundPaper>
         {/* Cards Display */}
         <Grid container spacing={2} sx={{ marginTop: 2 }}>
           {currentHeros.map((card_name) => (
@@ -85,7 +60,7 @@ const Enhancement = () => {
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
           <EnhancementHeroPopup heroCharacter={accountInfoConext.accountInfo.heros[heroIdMapping[editingCard]]}/>
         </Dialog>
-      </Paper>
+      </BackgroundPaper>
     </Box>
   );
 };

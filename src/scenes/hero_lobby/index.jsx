@@ -6,6 +6,7 @@ import { AccountInfoContext } from "../../contexts/account_info";
 import { noObjectStr } from "../../data/constants";
 import { handleHeroImagePath } from "../../heplers/image_helper";
 import FramedImage from "../../components/FramedImage";
+import BackgroundPaper from "../../components/BackgroundPaper";
 
 
 
@@ -53,15 +54,7 @@ const HeroLobby = () => {
   return (
     <Box m="20px">
       <Header title="Hero Lobby" subtitle="Managing your current data" />
-        <Paper
-        elevation={3}
-        sx={{
-          width: '100%',
-          padding: 3,
-          borderRadius: 2,
-          backgroundColor: colors.blueAccent[900], // Light beige for a paper-like look
-        }}
-      >
+      <BackgroundPaper>
         {/* Tabs for Switching Card Sets */}
         <Tabs
           value={activeTab}
@@ -115,7 +108,7 @@ const HeroLobby = () => {
             </Grid>
           ))}
         </Grid>
-      </Paper>
+      </BackgroundPaper>
     </Box>
   );
 };

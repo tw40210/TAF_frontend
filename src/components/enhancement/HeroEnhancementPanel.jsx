@@ -44,14 +44,7 @@ const MainCharPanel = ({heroCharacter, value, index }) => {
 }
 
 const EnhancementPanel = ({heroCharacter, value, index }) => {
-  // const listsData = [
-  //   ["Item 1A", "Item 2A", "Item 3A"],
-  //   ["Item 1B", "Item 2B", "Item 3B"],
-  //   ["Item 1C", "Item 2C", "Item 3C"],
-  //   ["Item 1D", "Item 2D", "Item 3D"],
-  //   ["Item 1E", "Item 2E", "Item 3E"],
-  //   ["Item 1F", "Item 2F", "Item 3F"],
-  // ];
+
   const currentHeroCharacterSetsKeys= Object.keys(heroCharacter.heroTraitSets)
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -136,7 +129,12 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
                             key={itemIndex}
                             onClick={() => handleListItemClick(setKey, traitKey)}
                         >
-                          <ListItemText primary={traitIdMapping[heroCharacter.heroTraitSets[setKey][traitKey].trait_id].name} />
+                          <ListItemText primary={traitIdMapping[heroCharacter.heroTraitSets[setKey][traitKey].trait_id].name} 
+                          sx={{  
+                            outline: (drawerSetKey===setKey && drawerTraitKey===traitKey) ? `1px solid ${colors.greenAccent[400]}` : null,
+                            padding: '5px',
+                            borderRadius: 1, 
+                            }}/>
                         </ListItemButton>
                       ))}
                     </List>
