@@ -14,6 +14,7 @@ import Enhancement from "./scenes/enhancement";
 import HeroAltar from "./scenes/hero_altar";
 import HeroLobby from "./scenes/hero_lobby";
 import { initAccountInfo } from "./data/initData";
+import Treasures from "./scenes/Treasures";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -67,6 +68,10 @@ function App() {
                           <Route
                             path={PageUrl.HeroLobby}
                             element={<HeroLobby />}
+                          />
+                          <Route
+                            path={PageUrl.Treasures}
+                            element={<Treasures />}
                           />
                         </Routes>
                       </main>

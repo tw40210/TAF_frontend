@@ -6,4 +6,5 @@ export const PageUrl = {
   Enhancement: "/frontend/enhancement",
   HeroAltar: "/frontend/hero_altar",
   HeroLobby: "/frontend/hero_lobby",
+  Treasures: "/frontend/treasures",
 };
