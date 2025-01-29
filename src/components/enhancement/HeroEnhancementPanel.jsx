@@ -4,13 +4,13 @@ import { handleHeroImagePath } from '../../heplers/image_helper';
 import { traitIdMapping } from '../../data/trait_index';
 import { itemIdMapping } from '../../data/item_index';
 import { tokens } from "../../contexts/theme";
+import { GetTagsStyleObj } from '../../contexts/component_sx';
 
 const MainCharPanel = ({heroCharacter, value, index }) => {
   return (
     <Box role="tabpanel" hidden={value !== index} aria-labelledby={`tab-${index}`}>
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>index {index}</Typography>
           <Card
                 variant="outlined"
               >
@@ -56,7 +56,6 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
   const handleSelectChange = (event) =>{
     setDrawerItemId(event.target.value)
   }
-  console.log("drawerItemId", drawerItemId)
   
 
   const handleDrawerContent = ()=>{
@@ -112,7 +111,6 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
     <Box role="tabpanel" hidden={value !== index} aria-labelledby={`tab-${index}`}>
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>index {index}</Typography>
           <Card
                 variant="outlined"
               >
@@ -120,8 +118,8 @@ const EnhancementPanel = ({heroCharacter, value, index }) => {
               <Grid container spacing={4}>
                 {currentHeroCharacterSetsKeys.map((setKey, index) => (
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Typography variant="h6" align="center">
-                      {setKey} {index + 1}
+                    <Typography variant="h5" align="center">
+                      {setKey}
                     </Typography>
                     <List>
                       {Object.keys(heroCharacter.heroTraitSets[setKey]).map((traitKey, itemIndex) => (
@@ -197,11 +195,7 @@ const EnhancementHeroPopup = ({ heroCharacter }) => {
   return (
     <Paper elevation={3} sx={{ width: '100%', margin: '5px auto', padding: 2 }}>
       <Tabs value={currentTab} onChange={handleTabChange} aria-label="example tabs" 
-      sx={{
-        '& .MuiTab-root': { color: colors.grey[400] }, // Default color for tabs
-        '& .Mui-selected': { color: colors.greenAccent[400] }, // Color for the selected tab
-        '& .MuiTabs-indicator': { backgroundColor: colors.greenAccent[400] }, // Indicator color
-      }}>
+      sx={GetTagsStyleObj(colors)}>
         <Tab label="Tab One" id="tab-0" aria-controls="tabpanel-0" />
         <Tab label="Tab Two" id="tab-1" aria-controls="tabpanel-1" />
         <Tab label="Tab Three" id="tab-2" aria-controls="tabpanel-2" />

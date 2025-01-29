@@ -7,6 +7,7 @@ import { noObjectStr } from "../../data/constants";
 import { handleHeroImagePath } from "../../heplers/image_helper";
 import FramedImage from "../../components/FramedImage";
 import BackgroundPaper from "../../components/BackgroundPaper";
+import { GetTagsStyleObj } from "../../contexts/component_sx";
 
 
 
@@ -60,11 +61,7 @@ const HeroLobby = () => {
           value={activeTab}
           onChange={handleTabChange}
           centered
-          sx={{
-            '& .MuiTab-root': { color: colors.grey[400] }, // Default color for tabs
-            '& .Mui-selected': { color: colors.greenAccent[400] }, // Color for the selected tab
-            '& .MuiTabs-indicator': { backgroundColor: colors.greenAccent[400] }, // Indicator color
-          }}
+          sx={GetTagsStyleObj(colors)}
         >
           <Tab label="Set 1" />
           <Tab label="Set 2" />

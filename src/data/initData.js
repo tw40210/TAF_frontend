@@ -29,12 +29,12 @@ const initHeroTraitSet = new HeroTraitSet({
 })
 
 const initHeroTraitSets = {
-  traitSet_0: structuredClone(initHeroTraitSet),
-  traitSet_1: structuredClone(initHeroTraitSet),
-  traitSet_2: structuredClone(initHeroTraitSet),
-  traitSet_3: structuredClone(initHeroTraitSet),
-  traitSet_4: structuredClone(initHeroTraitSet),
-  traitSet_5: structuredClone(initHeroTraitSet),
+  "Head": structuredClone(initHeroTraitSet),
+  "Chest": structuredClone(initHeroTraitSet),
+  "Right hand": structuredClone(initHeroTraitSet),
+  "Left hand": structuredClone(initHeroTraitSet),
+  "Right leg": structuredClone(initHeroTraitSet),
+  "Left leg": structuredClone(initHeroTraitSet),
 }
 
 const initItemSet = {
