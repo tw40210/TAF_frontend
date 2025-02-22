@@ -1,4 +1,4 @@
-import { Box, Paper, Select, MenuItem, Button, CardMedia, TextField, Typography, useTheme } from "@mui/material";
+import { Box, Paper, Select, MenuItem, Button, CardMedia, Grid, TextField, Typography, FormGroup, FormControlLabel, Checkbox, useTheme } from "@mui/material";
 import { tokens } from "../../contexts/theme";
 import Header from "../../components/Header";
 import { useState, useEffect } from "react";
@@ -9,86 +9,73 @@ const Treasures = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  useEffect(() => {
-    // fetchMetaData(priceDataConext.setPriceMetaData);
-  }, []);
   const [selectedOption, setSelectedOption] = useState("");
-
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+  const [text, setText] = useState("");
+  const [questions, setQuestions] = useState([
+    { question: "What is your favorite color?", options: ["Red", "Blue", "Green", "Yellow"] },
+    { question: "Which season do you prefer?", options: ["Spring", "Summer", "Fall", "Winter"] },
+    { question: "What is your favorite food?", options: ["Pizza", "Burger", "Pasta", "Salad"] },
+  ]);
 
   const handleButtonClick = () => {
-    alert(`You selected: ${selectedOption}`);
+    setText(`Selected: ${selectedOption}`);
   };
 
   return (
     <Box m="20px">
       <Header title="Treasures" subtitle="Manage your treasures" />
 
-      <BackgroundPaper>
-        {/* Cards Display */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "flex-start",
-            justifyContent: "center",
-            padding: 2,
-            gap: 3,
-            maxWidth: 600,
-            margin: "auto",
-            boxShadow: 3,
-            borderRadius: 2,
-          }}
-        >
-          {/* Left Column */}
-          <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 3 }}>
-            {/* Image */}
-            <CardMedia
-                    component="img"
-                    image={handleHeroImagePath("Option 1")}
-                    alt="Example Image"
-                    style={{ width: '100%' }} 
-                  />
+      
+        <Grid container spacing={2}>
+          {/* Left Block */}
+          
+          <Grid item xs={4}>
+            <BackgroundPaper>
+              <Box sx={{ padding: 2, display: "flex", flexDirection: "column", gap: 2 }}>
+                <Select
+                  fullWidth
+                  value={selectedOption}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                >
+                  <MenuItem value={"option1"}>Option 1</MenuItem>
+                  <MenuItem value={"option2"}>Option 2</MenuItem>
+                  <MenuItem value={"option3"}>Option 3</MenuItem>
+                </Select>
+                <Button variant="contained" onClick={handleButtonClick}>
+                  Submit
+                </Button>
+                <TextField fullWidth value={text} InputProps={{ readOnly: true }} />
+              </Box>
+            </BackgroundPaper>
+          </Grid>
+          
 
-            {/* Dropdown Menu */}
-              <Select
-                labelId="dropdown-label"
-                value={selectedOption}
-                onChange={handleChange}
-              >
-                <MenuItem value="Option 1">Option 1</MenuItem>
-                <MenuItem value="Option 2">Option 2</MenuItem>
-                <MenuItem value="Option 3">Option 3</MenuItem>
-              </Select>
-
-            {/* Button */}
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleButtonClick}
-              disabled={!selectedOption} // Disable button if no option selected
-            >
-              Submit
-            </Button>
-          </Box>
-
-          {/* Right Column */}
-          <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-            <Typography variant="h6">Information</Typography>
-            <TextField
-              multiline
-              rows={10}
-              variant="outlined"
-              value={selectedOption ? `You selected: ${selectedOption}` : "No option selected."}
-              InputProps={{ readOnly: true }}
-              fullWidth
-            />
-          </Box>
-        </Box>
-      </BackgroundPaper>
+          
+          {/* Right Block (Twice as Wide) */}
+          
+          <Grid item xs={8}>
+            <BackgroundPaper>
+              <Box sx={{ padding: 2, height: "100%" }}>
+                <Typography variant="h6">Multiple Choice Questions:</Typography>
+                {questions.map((item, index) => (
+                  <Box key={index}>
+                    <Typography>{item.question}</Typography>
+                    <FormGroup>
+                      {item.options.map((option, i) => (
+                        <FormControlLabel
+                          key={i}
+                          control={<Checkbox />}
+                          label={option}
+                        />
+                      ))}
+                    </FormGroup>
+                  </Box>
+                ))}
+                <Button variant="contained" sx={{ marginTop: 2 }}>Submit Answers</Button>
+              </Box>
+            </BackgroundPaper>
+          </Grid>
+        </Grid>
     </Box>
   );
 };
