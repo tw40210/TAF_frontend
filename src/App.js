@@ -15,6 +15,11 @@ import HeroAltar from "./scenes/hero_altar";
 import HeroLobby from "./scenes/hero_lobby";
 import { initAccountInfo } from "./data/initData";
 import Treasures from "./scenes/Treasures";
+import Header from "./components/logHeader";
+import { AuthProvider } from "./contexts/authContext";
+import Register from "./components/register";
+import Login from "./components/login";
+import Home from "./components/logHome";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -23,6 +28,7 @@ function App() {
   const [accountInfo, setAccountInfo] = useState(initAccountInfo);
 
   return (
+          <AuthProvider>
             <ColorModeContext.Provider value={colorMode}>
               <PriceDataContext.Provider
                 value={{
@@ -71,7 +77,23 @@ function App() {
                           />
                           <Route
                             path={PageUrl.Treasures}
-                            element={<Treasures />}
+                            // element={<Treasures />}
+                            element={<Header />}
+                          />
+                          <Route
+                            path={"/register"}
+                            // element={<Treasures />}
+                            element={<Register />}
+                          />
+                          <Route
+                            path={"/login"}
+                            // element={<Treasures />}
+                            element={<Login />}
+                          />
+                          <Route
+                            path={"/home"}
+                            // element={<Treasures />}
+                            element={<Home />}
                           />
                         </Routes>
                       </main>
@@ -80,6 +102,7 @@ function App() {
                 </AccountInfoContext.Provider>
               </PriceDataContext.Provider>
             </ColorModeContext.Provider>
+          </AuthProvider>
   );
 }
 
