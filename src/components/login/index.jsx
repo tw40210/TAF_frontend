@@ -11,12 +11,13 @@ const Login = () => {
     const [isSigningIn, setIsSigningIn] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault()
         if(!isSigningIn) {
             setIsSigningIn(true)
-            await doSignInWithEmailAndPassword(email, password)
-            // doSendEmailVerification()
+            doSignInWithEmailAndPassword(email, password).catch(err => {
+                setIsSigningIn(false)
+            })
         }
     }
 

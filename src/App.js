@@ -20,6 +20,7 @@ import { AuthProvider } from "./contexts/authContext";
 import Register from "./components/register";
 import Login from "./components/login";
 import Home from "./components/logHome";
+import ProtectedRoute from "./firebase/protect_route";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -77,6 +78,15 @@ function App() {
                           />
                           <Route
                             path={PageUrl.Treasures}
+                            // element={<Treasures />}
+                            element={
+                            <ProtectedRoute>
+                              <Treasures />
+                            </ProtectedRoute>
+                            }
+                          />
+                          <Route
+                            path={"/header"}
                             // element={<Treasures />}
                             element={<Header />}
                           />

@@ -8,13 +8,28 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { generateFirebaseAuthErrorMessage } from "./errorHandler";
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const doSignInWithEmailAndPassword = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+export const doSignInWithEmailAndPassword = async (email, password) => {
+  
+  try {
+    console.log(email, password);
+    // Login user
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+  } catch (error) {
+    generateFirebaseAuthErrorMessage(error);
+    console.error(error);
+    throw error;
+    
+  }
 };
 
 export const doSignInWithGoogle = async () => {
