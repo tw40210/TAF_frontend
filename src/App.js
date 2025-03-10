@@ -53,28 +53,59 @@ function App() {
                         <Routes>
                           <Route
                             path={PageUrl.Dashboard}
-                            element={<Dashboard />}
+                            element={
+                              <ProtectedRoute>
+                                <Dashboard />
+                              </ProtectedRoute>
+                              }
+                            
                           />
-                          <Route path={PageUrl.Root} element={<Dashboard />} />
+                          <Route path={PageUrl.Root} 
+                          element={
+                            <ProtectedRoute>
+                              <Dashboard />
+                            </ProtectedRoute>
+                            } 
+                          />
                           <Route
                             path={PageUrl.PriceDataTable}
-                            element={<PriceDataTable />}
+                            element={
+                              <ProtectedRoute>
+                                <PriceDataTable />
+                              </ProtectedRoute>
+                              }
                           />
                           <Route
                             path={PageUrl.TowerOfMyth}
-                            element={<TowerOfMyth />}
+                            element={
+                              <ProtectedRoute>
+                                <TowerOfMyth />
+                              </ProtectedRoute>
+                              }
                           />
                           <Route
                             path={PageUrl.Enhancement}
-                            element={<Enhancement />}
+                            element={
+                              <ProtectedRoute>
+                                <Enhancement />
+                              </ProtectedRoute>
+                              }
                           />
                           <Route
                             path={PageUrl.HeroAltar}
-                            element={<HeroAltar />}
+                            element={
+                              <ProtectedRoute>
+                                <HeroAltar />
+                              </ProtectedRoute>
+                              }
                           />
                           <Route
                             path={PageUrl.HeroLobby}
-                            element={<HeroLobby />}
+                            element={
+                              <ProtectedRoute>
+                                <HeroLobby />
+                              </ProtectedRoute>
+                              }
                           />
                           <Route
                             path={PageUrl.Treasures}
